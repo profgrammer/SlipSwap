@@ -127,8 +127,10 @@ td {
           </div>
             <div class="container" >
             <label style="color:rgb(250, 243, 233); font-size: 150%;">Results:</label>
-
-            <table class="table table-bordered">
+            <div>
+              <img style="display: none; margin-left: auto; margin-right: auto" id="loader" src="/loader.gif" alt="">
+            </div>
+            <table class="table table-bordered" id="apiResults">
                 <!-- <thead>
                   <tr>
                     <th>Firstname</th>
@@ -250,10 +252,24 @@ td {
     </div>
 
     <script>
+
+      function hide(x) {
+        x.style.display = 'none';
+      }
+
+      function show(x) {
+        x.style.display = 'table';
+      }
+
+
       $("#calc").click(async () => {
         var a_cur = document.querySelector('#a_cur').value;
         var b_cur = document.querySelector('#b_cur').value;
         var amt = document.querySelector('#amount').value;
+        var loader = document.querySelector('#loader');
+        var table = document.querySelector('#apiResults')
+        hide(table);
+        show(loader);
         var res = await fetch(`/${a_cur}?amt=${amt}`);
         var json = await res.json();
         console.log(json);
@@ -288,7 +304,8 @@ td {
         $("#gasSpeed").html(gasSpeed);
         $("#amountSaved").html(amountSaved);
         $("#conversionRate").html(conversionRate);
-
+        hide(loader);
+        show(table);
         // document.getElementById('from_currency').innerHTML = $fromCurrency;
         // document.getElementById('toCurrency').innerHTML = $toCurrency;
         // document.getElementById('optimalPrice').innerHTML = $optimalPrice;
