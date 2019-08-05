@@ -51,6 +51,7 @@ app.get('/:id', async (req, res) => {
 
     var result = await request(process.env.ETHGASSTATION_API);
     result = JSON.parse(result);
+    console.log(result);
     var gasPrice = result["safeLow"];
     console.log('gasprice', gasPrice);
     function createObject(i, amount) {
@@ -153,9 +154,14 @@ app.get('/:id', async (req, res) => {
         console.log(withoutSplits[amt-1], dp[amt]);
 
         request('https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD', (error, request, body) => {
+            if(error) {
+                console.log(error);
+                return res.json('error');
+            }
+
             body = JSON.parse(body);
             var usd = parseFloat(body["USD"]);
-            const amountSaved = usd * (dp[amt] / 1000000.0 - withoutSplits[amt-1]);
+            const amountSaved = (usd * (dp[amt] / 1000000.0 - withoutSplits[amt-1]) ) ;
             console.log(usd);
             dpList.sort((a,b) => {return b-a});
             res.json({
@@ -167,7 +173,7 @@ app.get('/:id', async (req, res) => {
                 sequence: dpList,
                 gasRequired: (dpList.length * (gasPrice / 10)),
                 gasSpeed: "safeLow",
-                amountSaved: amountSaved,
+                amountSaved: Math.max(0,amountSaved),
                 conversionRate: process.env.factor
             });
         })
