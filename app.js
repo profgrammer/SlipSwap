@@ -180,6 +180,6 @@ app.get('/:id', async (req, res) => {
     })
 })
 
-const port = process.env.PORT_NUMBER;
+const port = process.env.PORT || 3000 ;
 
 app.listen(port, () => console.log(`listening at port ${port}`));
