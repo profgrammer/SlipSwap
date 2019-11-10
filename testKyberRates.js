@@ -4,7 +4,7 @@ var fetch   = require('node-fetch');
 var _       = require('lodash');
 
 
-const HTTP_ALCHMEY        = "https://eth-mainnet.alchemyapi.io/jsonrpc/V1GjKybGLx6rzSu517KSWpSrTSIIXmV7";
+const HTTP_ALCHMEY        = process.env.ALCHEMY_API;
 var web3                  = new Web3(new Web3.providers.HttpProvider(HTTP_ALCHMEY));
 
 
