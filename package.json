@@ -18,7 +18,7 @@
     "fetch": "^1.1.0",
     "lodash": "^4.17.15",
     "morgan": "^1.9.1",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.7",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "web3": "^1.2.0"
